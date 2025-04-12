@@ -22,7 +22,7 @@ export default function App() {
         <div className="app">
 
             <Logo />
-            <Form onAddİtems={handleAddİtems} />
+            <Form handleAddİtems={handleAddİtems} />
             <PackingList items={items} />
             <Stats />
 
@@ -44,7 +44,7 @@ function Logo() {
 };
 
 
-function Form({ onAddİtems }) {
+function Form({ handleAddİtems }) {
 
     const [description, setDescription] = useState(null);
     const [quantity, setQuantity] = useState(null);
@@ -55,7 +55,7 @@ function Form({ onAddİtems }) {
         if (!description) return;
 
         const newItem = { description, quantity, packed: false, id: Date.now() };
-        onAddİtems(newItem);
+        handleAddİtems(newItem);
 
         setDescription("");
         setQuantity(1);
