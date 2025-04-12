@@ -22,8 +22,8 @@ export default function App() {
         <div className="app">
 
             <Logo />
-            <Form handleAddİtems={handleAddİtems} />
-            <PackingList items={items} handleDeleteİtem={handleDeleteİtem} handleToggleİtem={handleToggleİtem} />
+            <Form $handleAddİtems={handleAddİtems} />
+            <PackingList items={items} $handleDeleteİtem={handleDeleteİtem} $handleToggleİtem={handleToggleİtem} />
             <Stats />
 
         </div>
@@ -44,7 +44,7 @@ function Logo() {
 };
 
 
-function Form({ handleAddİtems }) {
+function Form({ $handleAddİtems }) {
 
     const [description, setDescription] = useState(null);
     const [quantity, setQuantity] = useState(null);
@@ -55,7 +55,7 @@ function Form({ handleAddİtems }) {
         if (!description) return;
 
         const newItem = { description, quantity, packed: false, id: Date.now() };
-        handleAddİtems(newItem);
+        $handleAddİtems(newItem);
 
         setDescription("");
         setQuantity(1);
@@ -92,7 +92,7 @@ function Form({ handleAddİtems }) {
 };
 
 
-function PackingList({ items, handleDeleteİtem, handleToggleİtem }) {
+function PackingList({ items, $handleDeleteİtem, $handleToggleİtem }) {
 
     return (
 
@@ -102,7 +102,7 @@ function PackingList({ items, handleDeleteİtem, handleToggleİtem }) {
 
                 {items.map((item) =>
 
-                    <İtem item={item} key={item.id} handleDeleteİtem={handleDeleteİtem} handleToggleİtem={handleToggleİtem} />
+                    <İtem item={item} key={item.id} $handleDeleteİtem={$handleDeleteİtem} $handleToggleİtem={$handleToggleİtem} />
 
                 )}
 
@@ -115,13 +115,13 @@ function PackingList({ items, handleDeleteİtem, handleToggleİtem }) {
 };
 
 
-function İtem({ item, handleDeleteİtem, handleToggleİtem }) {
+function İtem({ item, $handleDeleteİtem, $handleToggleİtem }) {
 
     return (
 
         <li>
 
-            <input type="checkbox" value={item.packed} onChange={() => handleToggleİtem(item.id)} />
+            <input type="checkbox" value={item.packed} onChange={() => $handleToggleİtem(item.id)} />
 
             <span style={item.packed ? { textDecoration: "line-through" } : null}>
 
@@ -129,7 +129,7 @@ function İtem({ item, handleDeleteİtem, handleToggleİtem }) {
 
             </span>
 
-            <button onClick={() => handleDeleteİtem(item.id)}>❌</button>
+            <button onClick={() => $handleDeleteİtem(item.id)}>❌</button>
 
         </li >
 
