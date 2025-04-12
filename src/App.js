@@ -1,12 +1,5 @@
 import { useState } from "react";
 
-// const initialItems = [
-
-//     { id: 1, description: "Passports", quantity: 2, packed: false },
-//     { id: 2, description: "Socks", quantity: 12, packed: false },
-//     { id: 3, description: "Charger", quantity: 1, packed: false },
-
-// ];
 
 export default function App() {
 
@@ -16,6 +9,9 @@ export default function App() {
         setİtems(items => [...items, newItem]);
     };
 
+    function handleDeleteİtem(id) {
+        setİtems(items => items.filter(item => item.id !== id));
+    };
 
     return (
 
@@ -23,7 +19,7 @@ export default function App() {
 
             <Logo />
             <Form handleAddİtems={handleAddİtems} />
-            <PackingList items={items} />
+            <PackingList items={items} handleDeleteİtem={handleDeleteİtem} />
             <Stats />
 
         </div>
@@ -92,7 +88,7 @@ function Form({ handleAddİtems }) {
 };
 
 
-function PackingList({ items }) {
+function PackingList({ items, handleDeleteİtem }) {
 
     return (
 
@@ -102,7 +98,7 @@ function PackingList({ items }) {
 
                 {items.map((item) =>
 
-                    <İtem item={item} key={item.id} />
+                    <İtem item={item} key={item.id} handleDeleteİtem={handleDeleteİtem} />
 
                 )}
 
@@ -115,7 +111,7 @@ function PackingList({ items }) {
 };
 
 
-function İtem({ item }) {
+function İtem({ item, handleDeleteİtem }) {
 
     return (
 
@@ -127,7 +123,7 @@ function İtem({ item }) {
 
             </span>
 
-            <button>❌</button>
+            <button onClick={() => handleDeleteİtem(item.id)}>❌</button>
 
         </li >
 
