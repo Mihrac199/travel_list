@@ -24,7 +24,7 @@ export default function App() {
             <Logo />
             <Form $handleAddİtems={handleAddİtems} />
             <PackingList items={items} $handleDeleteİtem={handleDeleteİtem} $handleToggleİtem={handleToggleİtem} />
-            <Stats />
+            <Stats $items={items} />
 
         </div>
 
@@ -47,7 +47,7 @@ function Logo() {
 function Form({ $handleAddİtems }) {
 
     const [description, setDescription] = useState(null);
-    const [quantity, setQuantity] = useState(null);
+    const [quantity, setQuantity] = useState(1);
 
 
     function handleSubmit(e) {
@@ -94,19 +94,47 @@ function Form({ $handleAddİtems }) {
 
 function PackingList({ items, $handleDeleteİtem, $handleToggleİtem }) {
 
+    const [sortBy, setSortBy] = useState("input");
+
+    let sortedItems;
+
+    if (sortBy === "input") {
+        sortedItems = items;
+    }
+
+    if (sortBy === "description") {
+        sortedItems = items.slice().sort((a, b) => a.description.localeCompare(b.description));
+    }
+
+    if (sortBy === "packed") {
+        sortedItems = items.slice().sort((a, b) => Number(a.packed) - Number(b.packed));
+    }
+
     return (
 
         <div className="list">
 
             <ul>
 
-                {items.map((item) =>
+                {sortedItems.map((item) =>
 
                     <İtem item={item} key={item.id} $handleDeleteİtem={$handleDeleteİtem} $handleToggleİtem={$handleToggleİtem} />
 
                 )}
 
             </ul>
+
+            <div className="actions">
+
+                <select value={sortBy} onChange={e => setSortBy(e.target.value)}>
+
+                    <option value="input">Sort by input order</option> {/* Giriş sırasına göre sırla */}
+                    <option value="description">Sort bt description</option> {/* Alfabetik sıralamaya göre sırala */}
+                    <option value="packed">Sort by packed status</option>{/* Paket durumuna göre sırala */}
+
+                </select>
+
+            </div>
 
         </div>
 
@@ -138,13 +166,33 @@ function İtem({ item, $handleDeleteİtem, $handleToggleİtem }) {
 };
 
 
-function Stats() {
+function Stats({ $items }) {
+
+    if (!$items.length) {
+
+        return (
+            <p className="stats">
+                <em>
+                    Start adding some items to your packing list...
+                </em>
+            </p>
+        );
+
+    };
+
+
+    const numItems = $items.length;
+    const numPacked = $items.filter(item => item.packed).length;
+    const percentage = Math.round(numPacked * 100 / numItems);
+
 
     return (
 
         <footer className="stats">
 
-            <em>You have X items on your list, and you already packed X (%X)</em>
+            <em>
+                {percentage === 100 ? `You got everything! Ready to go` : `You have ${numItems} items on your list, and you already packed ${numPacked} %${percentage}`}
+            </em>
 
         </footer>
 
