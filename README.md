@@ -1,3 +1,7 @@
-# Travel List Project (React)
+# Travel List Project
 
-Create a travel list.
+Used Technologies;
+
+       1) CSS 3 
+       2) React
+          - Create React App

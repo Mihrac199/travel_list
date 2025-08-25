@@ -1,5 +1,5 @@
-import { useState } from "react";
-import İtem from "./İtem";
+import { useState } from "react"
+import İtem from "./İtem"
 
 export default function PackingList({ items, $handleDeleteİtem, $handleToggleİtem, $handleClearİtems }) {
 
