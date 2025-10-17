@@ -2,6 +2,7 @@
 
 Used Technologies;
 
-       1) CSS 3 
-       2) React
+       1) HTML 5
+       2) CSS 3 
+       3) React
           - Create React App
